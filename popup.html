@@ -1,0 +1,181 @@
+<!doctype html>
+<html>
+<head>
+    <title>Usability Add-On</title>
+    <script src="lib/jquery.min.js"></script>
+    <script src="lib/html2pdf.js"></script>
+    <script src="popup.js"></script>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="main.css">
+</head>
+<body>
+<header>
+    <img id="ut_logo" alt="" src="img/icon_big.png"/>
+    <h1>Usability Testing</h1>
+    <button class="logo_button small" id="backButton"><img alt="" src="img/next.svg"><span>Zurück</span></button>
+</header>
+<main>
+    <button id="loadTestButton">Test starten</button>
+    <div>
+        <button id="createTestButton">Neuen Test erstellen</button>
+        <button id="loadResultsButton">Ergebnisse laden</button>
+    </div>
+    <a id="about_link">About</a>
+</main>
+<section id="toast">
+    <h3>Message sent!</h3>
+    <p>Thanks for getting in touch with me!<br/>
+        I will get back to you as soon possible.</p>
+</section>
+<section id="about">
+    <div id="made_by"><br/>This Plugin was made by <a target="_blank" href="http://www.leoleo.at">Leonhard Leopold</a>
+        <br/><br/>If you have any questions or enquiries please <a target="_blank"
+                                                                         href="mailto:leonhardleopold@gmail.com">contact</a>
+        me
+    </div>
+    <div id="flaticon_plug">Icons made by <a target="_blank" href="https://www.flaticon.com/authors/gregor-cresnar"
+                                             title="Gregor Cresnar">Gregor Cresnar</a> from <a target="_blank"
+                                                                                               href="https://www.flaticon.com/"
+                                                                                               title="Flaticon">www.flaticon.com</a>
+    </div>
+</section>
+<section id="createTest">
+    <div id="addNewRow">
+        <form id="addNewRowForm">
+            <div class="article_header">Allgemeine Informationen</div>
+            <article id="general_information">
+                <input placeholder="Titel" type="text" name="test_title" id="test_title"/><br/>
+                <label id="transfer_type_label">Wie möchten Sie die Ergebnisse zurück transferieren?</label>
+                <label class="container" for="transfer_method_email">via E-Mail
+                    <input checked type="radio" id="transfer_method_email" name="target_transfer_type" value="email">
+                    <span class="checkmark"></span>
+                </label>
+                <div class="tooltip left_tooltip"><img alt="i" src="img/info.svg"/>
+                    <span class="tooltiptext">Wenn der Test beendet ist, hat der Benutzer die Möglichkeit, die
+                        Ergebnisdatei an die angegebene E-Mail-Adresse durch Klicken auf den Button 'Ergebnisse zurücksenden' zurückzusenden'.</span>
+                </div>
+                <label class="container" for="transfer_method_url">via URL
+                    <input type="radio" id="transfer_method_url" name="target_transfer_type" value="url">
+                    <span class="checkmark"></span>
+                </label>
+                <div class="tooltip bottom_tooltip"><img alt="i" src="img/info.svg"/>
+                    <span class="tooltiptext">Wenn Sie die Ergebnisdateien in einem Ordner auf einem Server sammeln möchten,
+                        können Sie <a style="color: #ff7100" href="server/storeResult.php" download>dieses</a> Skript herunterladen und in den Zielordner legen. Stellen Sie anschließend sicher, dass das Skript über das Internet zugänglich ist und kopieren Sie
+                        die URL in das Eingabefeld unten. Wenn der Test beendet ist, hat der Benutzer die
+                        Option, um die Ergebnisdatei an das Skript zu senden, indem der Benutzer auf den Button 'Ergebnisse zurücksenden' klickt.</span>
+                </div>
+                <label class="container" for="transfer_method_none">None
+                    <input type="radio" id="transfer_method_none" name="target_transfer_type" value="none">
+                    <span class="checkmark"></span>
+                </label>
+                <div class="tooltip right_tooltip"><img alt="i" src="img/info.svg"/>
+                    <span class="tooltiptext">Wenn keine der beiden Optionen ausgewählt ist, hat der Tester immer noch die Möglichkeit, die Ergebnisdatei herunterzuladen!</span>
+                </div>
+                <input placeholder="E-Mail" type="email" name="test_email" id="test_email"/>
+                <input style="display: none" placeholder="URL" type="text" name="test_url" id="test_url"/>
+            </article>
+            <div id="created_tasks_header" class="article_header">Erstellte Aufgaben</div>
+            <article id="created_tasks">
+                <table id="testTable">
+                    <tr>
+                        <th>Aufgabe</th>
+                        <th>Ziel(e)</th>
+                        <th>Zeit Limit</th>
+                        <th>Optionen</th>
+                    </tr>
+                </table>
+            </article>
+            <div class="article_header">Einen neuen Task erstellen...</div>
+            <article id="create_new_task">
+                <label class="form_label">Beschreiben Sie dem Tester, was er tun soll, um diese Aufgabe zu erledigen.</label>
+                <input placeholder="Anweisung" type="text" name="instruction" id="instruction"/>
+                <hr style="margin-bottom: 12px;"/>
+                <label class="container" for="url">URL
+                    <input checked type="radio" id="url" name="target_type" value="url">
+                    <span class="checkmark"></span>
+                </label>
+                <div class="tooltip left_tooltip"><img alt="i" src="img/info.svg"/>
+                    <span class="tooltiptext">Wählen Sie die URL der Seite, die der Benutzer erreichen muss, um
+die Aufgabe abzuschließen. Sobald die eingegebene URL erreicht ist, wird die Aufgabe beendet!</span>
+                </div>
+                <label class="container" for="css_id">CSS ID
+                    <input type="radio" id="css_id" name="target_type" value="css_id">
+                    <span class="checkmark"></span>
+                </label>
+                <div class="tooltip"><img alt="i" src="img/info.svg"/>
+                    <span class="tooltiptext">Wählen Sie die CSS-ID des Ziels, das der Benutzer erreichen muss, um die Aufgabe abzuschließen. Die Aufgabe ist erst dann abgeschlossen, wenn der Benutzer auf das ausgewählte Ziel oder ein darin verschachteltes Element klickt. Wenn das gewünschte Ziel keine CSS-ID hat, sollten Sie erwägen, eine hinzuzufügen oder ein anderes Element zu verwenden. Beachten Sie, dass ein Element auf JEDER Seite gültig ist, sobald es die gewünschte CSS-ID auf dieser Seite gibt.
+            </span>
+                </div>
+
+                <label class="container" for="both">Beide
+                    <input type="radio" id="both" name="target_type" value="both">
+                    <span class="checkmark"></span>
+                </label>
+                <div class="tooltip right_tooltip"><img alt="i" src="img/info.svg"/>
+                    <span class="tooltiptext">Wählen Sie die Seite und das Ziel, auf die der Benutzer klicken muss, um die Aufgabe abzuschließen. Die Aufgabe ist erst dann abgeschlossen, wenn sich der Benutzer auf einer der richtigen Seiten befindet und auf eines der Zielelemente klickt.</span>
+                </div>
+                <div id="url_target_wrapper">
+                    <label id="targetURLLabel" class="form_label">Geben Sie den URL zur Seite ein, den die Testperson erreichen muss.</label>
+                    <button type="button" id="add_url"><img width="15px" alt="+" src="img/add.svg"/></button>
+                    <div>
+                        <input placeholder="URL" type="text" id="url_target_1" class="url_target"/>
+                        <button type="button" id="use_url_target_1">Aktuelle URL</button>
+                    </div>
+                </div>
+                <div id="separator">
+                    <hr/>
+                </div>
+                <div id="css_id_target_wrapper">
+                    <label id="targetCSSIDLabel" class="form_label">Wählen Sie das Ziel-Element, dass gefunden werden muss.</label>
+                    <button type="button" id="add_css_id"><img width="15px" alt="+" src="img/add.svg"/></button>
+                    <div>
+                        <input placeholder="CSS ID" type="text" id="css_id_target_1" class="css_id_target"/>
+                        <button type="button" id="use_css_id_target_1">Ziel wählen</button>
+                    </div>
+                </div>
+                <hr/>
+                <label id="addTimeLimitLabel" class="form_label">Wenn Sie ein Zeit-Limit zu dieser Aufgabe hinzufügen wollen, klicken Sie den Button.</label>
+                <button type="button" class="logo_button medium" id="addTimeLimit"><img src="img/watch.svg"><span>Zeit-Limit hinzufügen</span>
+                </button>
+                <span id="timeLimitWrapping"><input placeholder="Zeit-Limit" type="number" name="timeLimit"
+                                                    id="timeLimit"/><span style="display: inline-block"
+                                                                          class="form_label"> Sekunden</span></span>
+                <hr/>
+                <button type="button" class="logo_button" id="addToTest"><img alt="+" src="img/plus.svg"><span>Zum Test hinzufügen</span>
+                </button>
+            </article>
+            <button type="button" class="logo_button" id="download_json"><img alt=" " src="img/download-1.svg"><span>Test herunterladen</span>
+            </button>
+        </form>
+    </div>
+</section>
+<section id="loadTest">
+    <div id="drop_zone">
+        <p>Ziehen Sie eine Testdatei (.json) in diesen Bereich</p>
+        <input type="file" id="file_input" accept=".json">
+        <button type="button" class="logo_button" id="browse_files"><img alt=" " src="img/search.svg"><span>Dateien durchsuchen...</span>
+        </button>
+    </div>
+    <button class="logo_button" id="takeTestButton"><img alt=" " src="img/next.svg"><span>Test starten</span></button>
+</section>
+<section id="loadResults">
+    <div id="drop_zone_results">
+        <p>Ziehen Sie mehrere Ergebnisdateien (.json) in diesen Bereich</p>
+        <input type="file" multiple id="file_input_results" accept=".json">
+        <button type="button" class="logo_button" id="browse_result_files"><img alt=" " src="img/search.svg"><span>Dateien durchsuchen...</span>
+        </button>
+
+
+    </div>
+    <button class="logo_button" id="createSummaryButton"><img alt="" src="img/next.svg"><span>Zusammenfassung erstellen</span></button>
+</section>
+<section id="displayResults">
+    <button class="logo_button" id="download_results"><img alt="" src="img/download-1.svg"><span>Als PDF herunterladen</span>
+    </button>
+</section>
+<section id="takeTest">
+    <div id="takeTest_instruction"></div>
+    <button class="logo_button" id="takeTest_cancel"><img alt="-" src="img/cancel.svg"><span>Aufgabe abbrechen</span></button>
+</section>
+</body>
+</html>
