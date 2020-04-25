@@ -16,5 +16,8 @@ Wenn der Ersteller des Tests alle Ergebnisdateien gesammelt hat, können diese m
 
 ## Andere Informationen
 Es ist auch möglich, einen Test [hier](http://leoleo.at/usabilityTest/) in einem größeren Fenster als in der Browser-Erweiterung zu erstellen und die Ergebnisse zu visualisieren.
-
 Diese Implementierung ist in zwei Sprachen - Deutsch und [Englisch](https://github.com/Leonhard-Leopold/usability-testing/) verfügbar.
+Diese Browser Erweiterung wurde von **Leonhard Leopold** erstellt - wenn sie Fragen haben, kontakiterien Sie mich unter leonhardleopold@gmail.com
+
+**Wenn Sie diese Software verwenden wollen, laden Sie sich diesen Ordner herunter oder gehen Sie auf den [Chrome Web Store](https://chrome.google.com/webstore/detail/usability-testing-german/bmeedbnjicfdffnpifaopndcjkajgaln). Wenn Sie die Software erweitern wollen, finden Sie mehr Information dazu [hier](https://github.com/Leonhard-Leopold/usability-testing).**
+
